@@ -1,0 +1,5 @@
+{
+  "name": "Rastreador Manager3",
+  "description": "A vehicle tracker client management system featuring smart text parsing, WhatsApp integration, and local data persistence.",
+  "requestFramePermissions": []
+}
