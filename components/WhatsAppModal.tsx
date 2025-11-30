@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Client, Template } from '../types';
 import { MessageCircle, Send, X, Edit, Smartphone, Monitor } from 'lucide-react';
@@ -31,22 +32,23 @@ export const WhatsAppModal: React.FC<Props> = ({ client, templates, onClose }) =
     const encoded = encodeURIComponent(msg);
     let phone = client.phone.replace(/\D/g, '');
     
-    // Add Brazil country code (55) if it looks like a local number (10 or 11 digits)
+    // Adiciona o código do Brasil (55) se parecer um número local (10 ou 11 dígitos)
     if (phone.length >= 10 && phone.length <= 11) {
       phone = `55${phone}`;
     }
     
     if (type === 'web') {
+      // WhatsApp Web para Desktop
       return `https://web.whatsapp.com/send?phone=${phone}&text=${encoded}`;
     }
     
-    // Use api.whatsapp.com which is the most reliable standard for triggering the app
-    // across different mobile devices/browsers.
-    return `https://api.whatsapp.com/send?phone=${phone}&text=${encoded}`;
+    // Link oficial curto (wa.me) para abrir o APP no celular
+    return `https://wa.me/${phone}?text=${encoded}`;
   };
 
   const handleSend = (type: 'web' | 'app') => {
     const url = generateLink(type);
+    // Abre em nova aba/janela para disparar a intent do celular
     window.open(url, '_blank');
     onClose();
   };
@@ -134,7 +136,7 @@ export const WhatsAppModal: React.FC<Props> = ({ client, templates, onClose }) =
               </div>
             )}
             <p className="text-xs text-gray-400 text-center mt-3">
-              "WhatsApp Web" para computador. "Abrir no App" para celular ou aplicativo desktop instalado.
+              "WhatsApp Web" para usar no PC. "Abrir no App" abre o aplicativo no celular.
             </p>
           </div>
         </div>
